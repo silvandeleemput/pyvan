@@ -184,9 +184,9 @@ def make_startup_exe(main_file_name, show_console, build_dir, relative_pydist_di
     """ Make the startup exe file needed to run the script """
     print("Making startup exe file")
     exe_fname = os.path.join(build_dir, main_file_name.split(".py")[0] + ".exe")
-    python_entrypoint = "python" + ("" if show_console else "w") + ".exe"
+    python_entrypoint = "python.exe"
     command_str = f"{{EXE_DIR}}\\{relative_pydist_dir}\\{python_entrypoint} {{EXE_DIR}}\\{relative_source_dir}\\{main_file_name}"
-    generate_exe(target=Path(exe_fname), command=command_str, icon_file=None if icon_file is None else Path(icon_file))
+    generate_exe(target=Path(exe_fname), command=command_str, icon_file=None if icon_file is None else Path(icon_file), show_window=show_console)
 
     if not show_console:
         with open(main_file_name, "r", encoding="utf8", errors="surrogateescape") as f:
@@ -369,7 +369,7 @@ def build(
     show_console = False,
     input_dir = os.getcwd(),
     build_dir = os.path.join(os.getcwd(), "dist"),
-    pydist_sub_dir = "",
+    pydist_sub_dir = "pydist",
     source_sub_dir = "",
     python_version = None,
     use_pipreqs = True,
